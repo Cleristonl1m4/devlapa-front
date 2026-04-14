@@ -57,6 +57,7 @@ export const apiRequest = async (endpoint, method = 'GET', body = null) => {
   const token = localStorage.getItem('token');
   
   if (!token) {
+    console.error('Token não encontrado no localStorage');
     throw new Error('Não autenticado');
   }
 
@@ -72,12 +73,25 @@ export const apiRequest = async (endpoint, method = 'GET', body = null) => {
     options.body = JSON.stringify(body);
   }
 
-  const response = await fetch(`${API_URL}${endpoint}`, options);
-  const data = await response.json();
+  try {
+    const response = await fetch(`${API_URL}${endpoint}`, options);
 
-  if (!response.ok) {
-    throw new Error(data.message || 'Erro na requisição');
+    // Se for 403 (Forbidden), não tentamos ler o JSON, apenas avisamos
+    if (response.status === 403) {
+      console.warn(`Acesso negado (403) para o endpoint: ${endpoint}. Verifique as Roles do usuário.`);
+      return null; // Retorna null para o dashboard não travar
+    }
+
+    // Só tentamos transformar em JSON se a resposta não estiver vazia (status 204 No Content)
+    const data = response.status !== 204 ? await response.json() : null;
+
+    if (!response.ok) {
+      throw new Error(data?.message || 'Erro na requisição');
+    }
+
+    return data;
+  } catch (error) {
+    console.error(`Erro na requisição ${endpoint}:`, error);
+    return null; // Retorna null para evitar que o Promise.all da Home quebre a tela toda
   }
-
-  return data;
 };
