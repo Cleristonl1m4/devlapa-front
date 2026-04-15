@@ -4,7 +4,7 @@ import { useAuth } from '../contexts/authContext';
 import { 
   LayoutDashboard, BarChart3, ShoppingCart, 
   Package, ClipboardList, TrendingUp, 
-  Users, LogOut, Receipt, Wallet, Truck 
+  Users, LogOut, Receipt, Wallet, Truck, ShoppingBag 
 } from 'lucide-react';
 
 const Layout = () => {
@@ -17,7 +17,7 @@ const Layout = () => {
     { label: "Relatórios", path: "/relatorios", icon: BarChart3 },
     { label: "Vendas", path: "/vendas", icon: ShoppingCart },
     { label: "Estoque", path: "/estoque", icon: Package },
-    { label: "Comandas", path: "/comandas", icon: ClipboardList },
+    { label: "Comandas", path: "/comandas", icon: ShoppingBag },
     { label: "Contas a Receber", path: "/contas-receber", icon: Receipt },
     { label: "Contas a Pagar", path: "/contas-pagar", icon: Wallet },
     { label: "Fornecedores", path: "/fornecedores", icon: Truck },
