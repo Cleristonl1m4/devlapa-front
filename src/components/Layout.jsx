@@ -8,14 +8,14 @@ import {
 } from 'lucide-react';
 
 const Layout = () => {
-  const { logout } = useAuth();
-  const navigate = useNavigate();
-  const location = useLocation();
+const { logout } = useAuth();
+const navigate = useNavigate();
+const location = useLocation();
 
-  const menuItems = [
-    { label: "Dashboard", path: "/home", icon: LayoutDashboard },
-    { label: "Relatórios", path: "/relatorios", icon: BarChart3 },
-    { label: "Vendas", path: "/vendas", icon: ShoppingCart },
+const menuItems = [
+  { label: "Dashboard", path: "/home", icon: LayoutDashboard },
+  { label: "Relatórios", path: "/relatorios", icon: BarChart3 },
+  { label: "Vendas", path: "/vendas", icon: ShoppingCart },
     { label: "Estoque", path: "/estoque", icon: Package },
     { label: "Produtos", path: "/produtos", icon: Beer },
     { label: "Comandas", path: "/comandas", icon: ShoppingBag },

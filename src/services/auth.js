@@ -76,13 +76,13 @@ export const apiRequest = async (endpoint, method = 'GET', body = null) => {
   try {
     const response = await fetch(`${API_URL}${endpoint}`, options);
 
-  
+    
     if (response.status === 403) {
       console.warn(`Acesso negado (403) para o endpoint: ${endpoint}. Verifique as Roles do usuário.`);
       return null; 
     }
 
-  
+    
     const data = response.status !== 204 ? await response.json() : null;
 
     if (!response.ok) {
