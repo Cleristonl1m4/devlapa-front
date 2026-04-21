@@ -12,13 +12,12 @@ const { logout } = useAuth();
 const navigate = useNavigate();
 const location = useLocation();
 
-const menuItems = [
-  { label: "Dashboard", path: "/home", icon: LayoutDashboard },
-  { label: "Relatórios", path: "/relatorios", icon: BarChart3 },
-  { label: "Vendas", path: "/vendas", icon: ShoppingCart },
-    { label: "Estoque", path: "/estoque", icon: Package },
-    { label: "Produtos", path: "/produtos", icon: Beer },
+  const menuItems = [
     { label: "Comandas", path: "/comandas", icon: ShoppingBag },
+    { label: "Dashboard", path: "/home", icon: LayoutDashboard },
+    { label: "Relatórios", path: "/relatorios", icon: BarChart3 },
+    { label: "Vendas", path: "/vendas", icon: ShoppingCart },
+    { label: "Estoque", path: "/estoque", icon: Package },
     { label: "Contas a Receber", path: "/contas-receber", icon: Receipt },
     { label: "Contas a Pagar", path: "/contas-pagar", icon: Wallet },
     { label: "Fornecedores", path: "/fornecedores", icon: Truck },

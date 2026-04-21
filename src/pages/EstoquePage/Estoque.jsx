@@ -24,6 +24,9 @@ const Estoque = () => {
   const [novoProduto, setNovoProduto] = useState({
     nome: "",
     preco: "",
+    unidade: "",
+    categoria: "",
+    fornecedor: "",
   });
 
   const carregarEstoque = async () => {
@@ -44,6 +47,34 @@ const Estoque = () => {
   useEffect(() => {
     carregarEstoque();
   }, []);
+
+  const handleCadastrarProduto = async (e) => {
+    e.preventDefault();
+    try {
+      await apiRequest("/api/produtos", "POST", {
+        nome: novoProduto.nome,
+        preco: parseFloat(novoProduto.preco),
+        unidade: novoProduto.unidade,
+        categoria: novoProduto.categoria,
+        fornecedor: novoProduto.fornecedor,
+      });
+      setShowModal(false);
+      setNovoProduto({
+        nome: "",
+        preco: "",
+        unidade: "",
+        categoria: "",
+        fornecedor: "",
+      });
+      carregarEstoque();
+    } catch (err) {
+      alert(
+        "Erro ao cadastrar produto. Verifique os dados e se você tem permissão." +
+          " Erro: " +
+          err.message,
+      );
+    }
+  };
 
   const handleCadastrar = async (e) => {
     e.preventDefault();
@@ -176,10 +207,102 @@ const Estoque = () => {
 
       {showModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 backdrop-blur-sm">
-          <div className="bg-white p-8 rounded-[30px] w-full max-w-md shadow-2xl">
+          <div className="bg-white p-50 rounded-[40px] w-full max-w-max shadow-2xl">
             <h3 className="text-2xl font-bold text-[#151D48] mb-6">
-              Novo Registro de Estoque
+              Novo Registro de Produto e Estoque
             </h3>
+            <form onSubmit={handleCadastrarProduto} className="space-y-4 mb-10">
+              <div>
+                <label className="text-xs font-bold text-gray-400 ml-2 uppercase">
+                  Nome do Produto
+                </label>
+                <input
+                  type="text"
+                  required
+                  className="w-full p-4 bg-slate-50 rounded-2xl border-none focus:ring-2 focus:ring-orange-500 outline-none"
+                  value={novoProduto.nome}
+                  onChange={(e) =>
+                    setNovoProduto({ ...novoProduto, nome: e.target.value })
+                  }
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-4">  
+                <div>
+                  <label className="text-xs font-bold text-gray-400 ml-2 uppercase">
+                    Preço
+                  </label>
+                  <input
+                    type="number"
+                    step="0.01"
+                    required
+                    className="w-full p-4 bg-slate-50 rounded-2xl border-none focus:ring-2 focus:ring-orange-500 outline-none"
+                    value={novoProduto.preco}
+                    onChange={(e) =>
+                      setNovoProduto({ ...novoProduto, preco: e.target.value })
+                    }
+                  />
+                </div>
+                <div>
+                  <label className="text-xs font-bold text-gray-400 ml-2 uppercase">
+                    Unidade
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    className="w-full p-4 bg-slate-50 rounded-2xl border-none focus:ring-2 focus:ring-orange-500 outline-none"  
+                    value={novoProduto.unidade}
+                    onChange={(e) =>
+                      setNovoProduto({ ...novoProduto, unidade: e.target.value })
+                    }
+                  />
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="text-xs font-bold text-gray-400 ml-2 uppercase">
+                    Categoria
+                  </label>        
+                  <input
+                    type="text"
+                    required
+                    className="w-full p-4 bg-slate-50 rounded-2xl border-none focus:ring-2 focus:ring-orange-500 outline-none"
+                    value={novoProduto.categoria}
+                    onChange={(e) =>
+                      setNovoProduto({ ...novoProduto, categoria: e.target.value })
+                    }
+                  />
+                </div>
+                <div>
+                  <label className="text-xs font-bold text-gray-400 ml-2 uppercase">
+                    Fornecedor
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    className="w-full p-4 bg-slate-50 rounded-2xl border-none focus:ring-2 focus:ring-orange-500 outline-none"
+                    value={novoProduto.fornecedor}
+                    onChange={(e) =>
+                      setNovoProduto({ ...novoProduto, fornecedor: e.target.value })
+                    }
+                  />
+                </div>    
+              </div>
+              <div className="flex gap-4 mt-6">
+                <button
+                  type="button"
+                  onClick={() => setShowModal(false)}
+                  className="flex-1 p-4 text-gray-400 font-bold"
+                >
+                  Cancelar
+                </button> 
+                <button
+                  type="submit"
+                  className="flex-1 p-4 bg-[#E67E22] text-white font-bold rounded-2xl"
+                > 
+                  Salvar
+                </button>
+              </div>
+            </form>
             <form onSubmit={handleCadastrar} className="space-y-4">
               <div>
                 <label className="text-xs font-bold text-gray-400 ml-2 uppercase">
@@ -246,6 +369,7 @@ const Estoque = () => {
       )}
     </div>
   );
+
 };
 
 export default Estoque;
