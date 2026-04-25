@@ -7,6 +7,7 @@ import Layout from './components/Layout.jsx';
 import ContasPagar from './pages/ContasPagarPage/ContasPagar';
 import Comandas from './pages/ComandasPage/Comandas';
 import Vendas from './pages/VendasPage/Vendas.jsx';
+import Fornecedores from './pages/FornecedoresPage/Fornecedores.jsx';
 
 const PrivateRoute = ({ children }) => {
   const { user, loading } = useAuth();
@@ -36,6 +37,7 @@ function App() {
             <Route path="/contas-pagar" element={<ContasPagar />} />
             <Route path="/comandas" element={<Comandas />} />
             <Route path="vendas" element={<Vendas />} />
+            <Route path="fornecedores" element={<Fornecedores />} />
           </Route>
 
           <Route path="/" element={<Navigate to="/home" replace />} />
