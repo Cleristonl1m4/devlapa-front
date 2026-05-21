@@ -14,12 +14,26 @@ api.interceptors.request.use((config) => {
     return Promise.reject(error);
 });
 
-export const apiRequest = async (endpoint, options = {}) => {
+export const apiRequest = async (endpoint, method = 'GET', data = null) => {
     try {
-        const response = await api(endpoint, options);
+        const response = await api({
+            url: endpoint,
+            method: method,
+            data: data
+        });
         return response.data;
     } catch (error) {
-        throw error;
+        let message = "Erro ao processar solicitação";
+        
+        if (error.response && error.response.data) {
+            message = typeof error.response.data === 'string' 
+                ? error.response.data 
+                : (error.response.data.message || message);
+        } else {
+            message = error.message;
+        }
+
+        throw new Error(message);
     }
 };
 
